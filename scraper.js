@@ -93,13 +93,14 @@ class Scraper {
   async getAttribute(attribute) {
     class AttributeScraper {
       constructor(attr) {
-        this.attr = attr
+        this.attr = attr;
+        this.values = [];
       }
 
       element(element) {
-        if (this.value) return
+        if (this.values.length > 5) return
 
-        this.value = element.getAttribute(this.attr)
+        this.values.push(element.getAttribute(this.attr));
       }
     }
 
@@ -107,8 +108,8 @@ class Scraper {
 
     await new HTMLRewriter().on(this.selector, scraper).transform(this.response).arrayBuffer()
 
-    return scraper.value || ''
+    return JSON.stringify(scraper.values) || '';
   }
 }
 
-export default Scraper
+export default Scraper;
