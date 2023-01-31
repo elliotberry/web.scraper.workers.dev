@@ -1,6 +1,6 @@
 import html from './lib/html.js';
 import contentTypes from './lib/content-types.js';
-import Scraper from './lib/scraper3.js';
+import Scraper from './lib/scraper.js';
 import {generateJSONResponse, generateErrorJSONResponse} from './lib/json-response.js';
 
 addEventListener('fetch', event => {
@@ -36,11 +36,11 @@ async function handleSiteRequest(request) {
   return new Response('Not found', {status: 404});
 }
 
-async function handleAPIRequest({url, selectors, attr, spaced, pretty}) {
+async function handleAPIRequest({url, selector, attr, spaced, pretty}) {
   let scraper, result;
  
   try {
-    scraper = await new Scraper(selectors).fetch(url);
+    scraper = await new Scraper().fetch(url);
   } catch (error) {
     return generateErrorJSONResponse(error, pretty);
   }
@@ -52,7 +52,7 @@ async function handleAPIRequest({url, selectors, attr, spaced, pretty}) {
 
   try {
  
-      result = await scraper.getAttribute("href");
+      result = await scraper.querySelectors(selector).getAttribute(attr);
     
   } catch (error) {
     return generateErrorJSONResponse(error, pretty);

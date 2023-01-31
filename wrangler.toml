@@ -1,7 +1,5 @@
 name = "web"
-# account_id = "2575000dd90a08dbbeb2b8cca2e64775" # scraper.workers.dev
-account_id = "75e1f5c9f491c69a403528a3f9d9e8ad" # scraper.workers.dev
-type = "webpack"
+account_id = "e8308a9ca45585112db0d6f88a2cf0c9"
 workers_dev = true
 main = "./index.js"
 compatibility_date = "2022-09-18"
