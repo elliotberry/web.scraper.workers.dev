@@ -1,4 +1,35 @@
 name = "web"
-account_id = "2575000dd90a08dbbeb2b8cca2e64775" # scraper.workers.dev
-type = "webpack"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
 workers_dev = true
+
+# The account is read from the CLOUDFLARE_ACCOUNT_ID environment variable
+# (set as a secret in CI) or from `wrangler login`.
+
+# The UI is served from ./public. `run_worker_first` makes the Worker handle
+# every request so that `/?url=...&selector=...` reaches the API instead of
+# being answered with index.html; the Worker serves the UI via the ASSETS binding.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[observability]
+enabled = true
+
+# Per-IP rate limit for API requests (120 requests per 60 seconds). Requests
+# that send the optional `API_KEY` secret in an `x-api-key` header skip it:
+#   npx wrangler secret put API_KEY
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 120
+  period = 60
+
+# Optional: record one Analytics Engine data point per scrape (host, status,
+# duration). Enable Analytics Engine for the account, then uncomment.
+# [[analytics_engine_datasets]]
+# binding = "ANALYTICS"
+# dataset = "web_scraper"
