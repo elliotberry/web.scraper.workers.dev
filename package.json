@@ -19,11 +19,11 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "^1.4.6",
+    "@cloudflare/vitest-plugin": "^1.5.1",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.13.0",
     "globals": "^17.13.0",
     "vitest": "^4.1.12",
-    "wrangler": "^4.151.3"
+    "wrangler": "^4.157.0"
   }
 }
